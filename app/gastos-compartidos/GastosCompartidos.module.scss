@@ -1,0 +1,20 @@
+.contenedor {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor {
+
+    input,
+    button,
+    span {
+        margin-bottom: 10px;
+        width: 200px;
+    }
+
+}
+
+.errorMessage {
+    color: red;
+    font-style: italic;
+}

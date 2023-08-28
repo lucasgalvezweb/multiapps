@@ -9,6 +9,10 @@ const links = [
     {
         label: 'Calculator',
         route: '/calc'
+    },
+    {
+        label: 'Gastos Compartidos',
+        route: '/gastos-compartidos'
     }
 ]
 

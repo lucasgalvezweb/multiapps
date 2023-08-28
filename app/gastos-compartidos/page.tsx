@@ -8,19 +8,19 @@ const listaPersonas = [
         nombre: "Juancito",
         ingreso: 2000,
         porcentaje: '',
-        montoPagar: 0
+        montoPagar: ''
     },
     {
         nombre: "Pedrito",
         ingreso: 2400,
         porcentaje: '',
-        montoPagar: 0
+        montoPagar: ''
     },
     {
         nombre: "Julita",
         ingreso: 3800,
         porcentaje: '',
-        montoPagar: 0
+        montoPagar: ''
     }
 ]
 
@@ -32,6 +32,7 @@ const GastosCompartidos = () => {
     const [nombre, setNombre] = useState('')
     const [ingreso, setIngreso] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [gastosErrorMessage, setGastosErrorMessage] = useState('')
 
     useEffect(() => {
         // console.log(personas)
@@ -55,6 +56,7 @@ const GastosCompartidos = () => {
     const handleGastosChange = (event: ChangeEvent<HTMLInputElement>) => {
         setGastosTotal(event.target.value)
         console.log(event.target.value)
+        setGastosErrorMessage('')
     }
 
     // Calculo total del app
@@ -62,12 +64,11 @@ const GastosCompartidos = () => {
         if (gastosTotal) {
             // 1. Actualizamos la sumatoria de ingresos
             setSumatoriaIngresos(calculoSumatoriaIngresos())
-            // 2. Actualizamos los porcentajes
+            // 2. Actualizamos el monto a pagar
             setPersonas(calcularMontoPagar())
-            // 3. Actualizar monto a pagar
-            // setPersonas(calcularMontoPagar())
         } else {
             console.log('Ingrese los gastos primero')
+            setGastosErrorMessage('Ingrese el total de gastos primero')
         }
     }
 
@@ -103,7 +104,7 @@ const GastosCompartidos = () => {
                 nombre: nombre,
                 ingreso: Number(ingreso),
                 porcentaje: '',
-                montoPagar: 0
+                montoPagar: ''
             }
 
             setNombre('')
@@ -138,16 +139,16 @@ const GastosCompartidos = () => {
                 <div className={styles.contenedor}>
                     <h2>Total de gastos</h2>
                     <input type="number" placeholder="Monto total" value={gastosTotal} onChange={handleGastosChange} />
-
+                    <span className={styles.errorMessage}>{gastosErrorMessage}</span>
                 </div>
                 <div className={styles.contenedor}>
                     {
                         personas.map((item, index) => (
-                            <p key={index}>{index + 1}. {item.nombre}: <span>S/. {item.ingreso}</span>
+                            <p key={index} className={styles.ingresosLabel}>{index + 1}. {item.nombre}: <span className={styles.ingresosLabel}>S/. {item.ingreso}</span>
                                 <br />
-                                <span>Porcentaje: {item.porcentaje}%</span>
+                                <span className={styles.porcentajeLabel}>Porcentaje: {item.porcentaje}%</span>
                                 <br />
-                                <span>Monto a pagar: S/. {item.montoPagar}</span>
+                                <span className={styles.montoPagarLabel}>Monto a pagar: S/. {item.montoPagar}</span>
                             </p>
                         ))
                     }
@@ -155,7 +156,8 @@ const GastosCompartidos = () => {
                 <button onClick={calcular}>Calcular</button>
 
                 <div>
-                    <h2>Ganancias totales: S/. {sumatoriaIngresos}</h2>
+                    <h2 className={styles.ingresosLabel}>Ganancias totales: S/. {sumatoriaIngresos}</h2>
+                    <h2 className={styles.montoPagarLabel}>Gastos totales: S/. {gastosTotal}</h2>
 
                 </div>
 
